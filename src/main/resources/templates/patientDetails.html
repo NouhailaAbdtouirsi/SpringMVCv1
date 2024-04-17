@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body>
+<div class="card">
+    <div class="card-header">
+        <h2>Details Patient</h2>
+    </div>
+    <div class="card-body">
+        <p>ID : <span th:text="${patient.id}" class="fw-bold"></span></p>
+        <p>Name : <span th:text="${patient.name}" class="fw-bold"></span></p>
+        <p>Date : <span th:text="${patient.dateNaissance}" class="fw-bold"></span></p>
+        <p>Score : <span th:text="${patient.score}" class="fw-bold"></span></p>
+        <p>Malade : <span th:text="${patient.malade}" class="fw-bold"></span></p>
+        <a class="btn btn-info" th:href="@{/index}">Back</a>
+    </div>
+</div>
+</body>
+</html>

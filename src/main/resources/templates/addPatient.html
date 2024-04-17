@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>Form to add a patient</h1>
+    <form th:action="@{/addPatient}" method="post" class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" th:id="name" th:name="name" class="form-control" required>
+            <div class="invalid-feedback">
+                Please provide a valid name.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="dateNaissance" class="form-label">Date</label>
+            <input type="date" th:id="dateNaissance" th:name="dateNaissance" class="form-control" required>
+            <div class="invalid-feedback">
+                Please provide a valid date.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="score" class="form-label">Score</label>
+            <input type="number" th:id="score" th:name="score" class="form-control" required>
+            <div class="invalid-feedback">
+                Please provide a valid score.
+            </div>
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" th:id="malade" th:name="malade" class="form-check-input">
+            <label class="form-check-label" for="malade">Malade</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+
+<script>
+    // JavaScript to enable Bootstrap validation styling
+    (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms)
+            .forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
+</body>
+</html>
