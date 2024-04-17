@@ -24,7 +24,7 @@ on ajoute le parametre keyword dans l'URL pour chercher les patients par nom ou 
 5. pour ce faire on ajoute un form avec un input de type text et un bouton submit dans la vue patients.html
     <img src="Capture/capture8.png">
 de meme a la methode index du controleur on ajoute un parametre keyword pour recuperer la valeur du champ de recherche.
-5. Supprimer un patient
+5. Supprimer un patient 
 Pour supprimer un patient, on ajoute une methode delete dans le controleur qui prend en parametre l'id du patient a supprimer.
 <img src="Capture/capture9.png">
 6. Faire des améliorations supplémentaires
