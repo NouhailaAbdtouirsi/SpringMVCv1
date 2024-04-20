@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template1"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Form Patient</title>
+    <link rel="stylesheet" href="webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content1">
+
+    <form method="post" th:action="@{save}">
+        <div class="card col-md-6 offset-3">
+            <div class="card-header">
+                <h2>Form Patients</h2>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" th:value="${patient.name}">
+                    <span class="text-danger" th:errors="${patient.name}"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="dateNaissance" class="form-label">Date Naissance</label>
+                    <input type="date" class="form-control" id="dateNaissance" name="dateNaissance" th:value="${patient.dateNaissance}">
+                    <span class="text-danger" th:errors="${patient.dateNaissance}"></span>
+
+                </div>
+                <div class="mb-3">
+                    <label for="score" class="form-label">Score</label>
+                    <input type="number" class="form-control" id="score" name="score" th:value="${patient.score}">
+                    <span class="text-danger" th:errors="${patient.score}"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="malade" class="form-label">Malade</label>
+                    <input type="checkbox" class="form-check-input" id="malade" name="malade" th:value="${patient.malade}">
+                    <span class="text-danger" th:errors="${patient.malade}"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

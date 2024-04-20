@@ -19,16 +19,16 @@ public class SpringMvcApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Patient p = new Patient();
-		p.setId(null);
-		p.setName("Nouhaila");
-		p.setMalade(false);
-		p.setScore(10);
-		p.setDateNaissance(new Date());
-		Patient p2 = new Patient(null, "Hamza", new Date(), true, 12);
-		Patient p3 = Patient.builder().name("Yassine").score(15).build();
-		patientRepo.save(p);
-		patientRepo.save(p2);
-		patientRepo.save(p3);
+//		Patient p = new Patient();
+//		p.setId(null);
+//		p.setName("Nouhaila");
+//		p.setMalade(false);
+//		p.setScore(10);
+//		p.setDateNaissance(new Date());
+//		Patient p2 = new Patient(null, "Hamza", new Date(), true, 12);
+//		Patient p3 = Patient.builder().name("Yassine").score(15).build();
+//		patientRepo.save(p);
+//		patientRepo.save(p2);
+//		patientRepo.save(p3);
 	}
 }
