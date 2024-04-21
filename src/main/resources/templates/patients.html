@@ -16,7 +16,7 @@
                 Patients
             </div>
             <div class="card-body">
-                <form th:action="@{/index}" method="get">
+                <form th:action="@{/user/index}" method="get">
                     <div class="input-group mb-3">
                         <label >keyword : </label>
                         <input type="text" name="keyword" th:value="${keyword}">
@@ -40,9 +40,9 @@
                         <td th:text="${p.score}"></td>
                         <td th:text="${p.malade}"></td>
                         <td >
-                            <a onclick="return confirm('Etes vous sure?')" class="btn btn-danger" th:href="@{delete(id=${p.id},keyword=${keyword},page=${currentPage})}">delete</a>
-                            <a class="btn btn-info" th:href="@{displayDetails(id=${p.id})}">Details</a>
-                            <a class="btn btn-warning" th:href="@{edit(id=${p.id},keyword=${keyword},page=${currentPage})}">Edit</a>
+                            <a th:if="${#authorization.expr('hasRole(''ADMIN'')')}" onclick="return confirm('Etes vous sure?')" class="btn btn-danger" th:href="@{/admin/delete(id=${p.id},keyword=${keyword},page=${currentPage})}">delete</a>
+                            <a class="btn btn-info" th:href="@{/user/displayDetails(id=${p.id})}">Details</a>
+                            <a th:if="${#authorization.expr('hasRole(''ADMIN'')')}" class="btn btn-warning" th:href="@{/admin/edit(id=${p.id},keyword=${keyword},page=${currentPage})}">Edit</a>
                         </td>
 
                     </tr>
@@ -50,7 +50,7 @@
                 </table>
                 <ul class="nav nav-pills">
                     <li th:each="page,status:${pages}">
-                        <a th:href="@{/index(page=${status.index},keyword=${keyword})}"
+                        <a th:href="@{/user/index(page=${status.index},keyword=${keyword})}"
                            th:class="${currentPage==status.index} ? 'btn btn-info ms-1' : 'btn btn-outline-info ms-1'"
                            th:text="${1+status.index}"></a>
                     </li>

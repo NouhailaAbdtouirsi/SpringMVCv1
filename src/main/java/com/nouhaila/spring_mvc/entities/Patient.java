@@ -17,13 +17,13 @@ public class Patient {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty
-    @Size(min = 5, max = 15)
+    @Size(min = 5, max = 50)
     private String name;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateNaissance;
     private boolean malade;
-    @DecimalMin("100")
+    @DecimalMin("9")
     private int score;
 
 }

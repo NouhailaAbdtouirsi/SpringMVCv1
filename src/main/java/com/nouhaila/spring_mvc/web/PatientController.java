@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,7 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 public class PatientController {
     private PatientRepo patientRepo;
-    @GetMapping( "/index")
+    @GetMapping( "/user/index")
     public String index(Model model,
 
                         @RequestParam(name = "page",defaultValue = "0") int page,
@@ -37,14 +38,15 @@ public class PatientController {
         return "patients";
     }
 
-    @GetMapping("/delete")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/delete")
     public String delete(Long id,
                          @RequestParam(name = "keyword",defaultValue = "") String keyword,
                          @RequestParam(name = "page",defaultValue = "0") int page){
         patientRepo.deleteById(id);
-        return "redirect:/index?page="+page+"&keyword="+keyword;
+        return "redirect:/user/index?page="+page+"&keyword="+keyword;
     }
-    @GetMapping("/displayDetails")
+    @GetMapping("/user/displayDetails")
     public String displayDetails(Long id, Model model){
         Patient patient = patientRepo.findById(id).orElse(null);
         model.addAttribute("patient", patient);
@@ -56,24 +58,29 @@ public class PatientController {
         return "redirect:/index";
     }
 
-    @GetMapping("/formPatients")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/formPatients")
     public String formPatient(Model model){
         model.addAttribute("patient",new Patient());
         return "formPatients";
     }
 
-    @PostMapping("/save")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/admin/save")
     public String save(Model model,
                        @Valid Patient patient,
-                       BindingResult bindResult
+                       BindingResult bindResult,
+                       @RequestParam(defaultValue = "0") int page,
+                       @RequestParam(defaultValue = "") String keyword
 
     ){
         if(bindResult.hasErrors()) return "formPatients";
         patientRepo.save(patient);
-        return "redirect:/index";
+        return "redirect:/user/index?page="+page+"&keyword="+keyword;
     }
 
-    @GetMapping("/edit")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/edit")
     public String edit(Model model, Long id,String keyword, int page){
         Patient patient = patientRepo.findById(id).orElse(null);
         if (patient == null) throw new RuntimeException("Patient not found");

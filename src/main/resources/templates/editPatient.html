@@ -11,16 +11,15 @@
 <body>
 <div layout:fragment="content1">
 
-    <form method="post" th:action="@{save(page=${page},keyword=${keyword})}">
+    <form method="post" th:action="@{/admin/save(page=${page},keyword=${keyword})}">
         <div class="card col-md-6 offset-3">
             <div class="card-header">
                 <h2>Form Patients</h2>
             </div>
             <div class="card-body">
                 <div class="mb-3">
-                    <label for="ID" class="form-label">ID</label>
-                    <input type="text" class="form-control" id="ID" name="ID" th:value="${patient.id}">
-                    <span class="text-danger" th:errors="${patient.id}"></span>
+                    <label for="id" class="form-label">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" th:value="${patient.id}" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
