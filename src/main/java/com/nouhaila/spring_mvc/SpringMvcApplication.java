@@ -2,6 +2,8 @@ package com.nouhaila.spring_mvc;
 
 import com.nouhaila.spring_mvc.entities.Patient;
 import com.nouhaila.spring_mvc.repositories.PatientRepo;
+import com.nouhaila.spring_mvc.security.services.AccountService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,8 +18,9 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import java.util.Date;
 
 @SpringBootApplication
+@AllArgsConstructor
 public class SpringMvcApplication  {
-	@Autowired
+
 	private PatientRepo patientRepo;
 	public static void main(String[] args) {
 		SpringApplication.run(SpringMvcApplication.class, args);
@@ -27,7 +30,7 @@ public class SpringMvcApplication  {
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	@Bean
+	//@Bean
 	CommandLineRunner commandLineRunner(JdbcUserDetailsManager jdbcUserDetailsManager) {
 		PasswordEncoder passwordEncoder = passwordEncoder();
 		return args -> {
@@ -56,6 +59,19 @@ public class SpringMvcApplication  {
 								.build()
 				);
 
+		};
+	}
+	//@Bean
+	CommandLineRunner start(AccountService accountService) {
+		return args -> {
+			accountService.saveRole("ADMIN");
+			accountService.saveRole("USER");
+			accountService.saveRole("MANAGER");
+			accountService.saveUser("nouhaila", "1234", "nouhaila@gmail.com", "1234");
+			accountService.saveUser("hamza", "1234", "hamza@gmail.Com", "1234");
+			accountService.addRoleToUser("nouhaila", "ADMIN");
+			accountService.addRoleToUser("nouhaila", "USER");
+			accountService.addRoleToUser("hamza", "USER");
 		};
 	}
 

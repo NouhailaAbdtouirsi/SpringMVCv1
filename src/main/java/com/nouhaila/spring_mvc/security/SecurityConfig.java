@@ -1,5 +1,7 @@
 package com.nouhaila.spring_mvc.security;
 
+import com.nouhaila.spring_mvc.security.services.UserDetailsServiceImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,12 +22,13 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
+@AllArgsConstructor
 public class SecurityConfig {
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
+    private UserDetailsServiceImpl userDetailsService;
 
-    @Bean
+
+    //@Bean
     public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource) {
         return new JdbcUserDetailsManager(dataSource);
     }
@@ -73,6 +76,7 @@ public class SecurityConfig {
         http.exceptionHandling(
                 (exception) -> exception.accessDeniedPage("/notAuthorized")
         );
+        http.userDetailsService(userDetailsService);
         return http.build();
 
     }
