@@ -7,13 +7,16 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 import java.util.Date;
 
 @SpringBootApplication
-public class SpringMvcApplication implements CommandLineRunner {
+public class SpringMvcApplication  {
 	@Autowired
 	private PatientRepo patientRepo;
 	public static void main(String[] args) {
@@ -24,19 +27,36 @@ public class SpringMvcApplication implements CommandLineRunner {
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	@Bean
+	CommandLineRunner commandLineRunner(JdbcUserDetailsManager jdbcUserDetailsManager) {
+		PasswordEncoder passwordEncoder = passwordEncoder();
+		return args -> {
+			UserDetails user1 = jdbcUserDetailsManager.loadUserByUsername("nouhaila");
+			if(user1 == null)
+				jdbcUserDetailsManager.createUser(
+					User.withUsername("nouhaila")
+							.password(passwordEncoder.encode("1234"))
+							.roles("USER")
+							.build()
+			);
+			UserDetails user2 = jdbcUserDetailsManager.loadUserByUsername("hamza");
+			if(user2 == null)
+				jdbcUserDetailsManager.createUser(
+					User.withUsername("hamza")
+							.password(passwordEncoder.encode("1234"))
+							.roles("USER")
+							.build()
+			);
+			UserDetails user3 = jdbcUserDetailsManager.loadUserByUsername("hamza");
+			if(user3 == null)
+				jdbcUserDetailsManager.createUser(
+						User.withUsername("admin")
+								.password(passwordEncoder.encode("1234"))
+								.roles("ADMIN", "USER")
+								.build()
+				);
 
-	@Override
-	public void run(String... args) throws Exception {
-//		Patient p = new Patient();
-//		p.setId(null);
-//		p.setName("Nouhaila");
-//		p.setMalade(false);
-//		p.setScore(10);
-//		p.setDateNaissance(new Date());
-//		Patient p2 = new Patient(null, "Hamza", new Date(), true, 12);
-//		Patient p3 = Patient.builder().name("Yassine").score(15).build();
-//		patientRepo.save(p);
-//		patientRepo.save(p2);
-//		patientRepo.save(p3);
+		};
 	}
+
 }
